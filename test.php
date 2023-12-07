@@ -3,28 +3,24 @@ try {
     $PDO = new PDO('mysql:host=51.210.151.13;dbname=tobji', 'EleveRostand1!', 'EleveRostand1!');
     $PDO->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    // Exemple de requête SELECT pour récupérer une seule colonne
+    // Exemple de requête SELECT
     $query = "SELECT salary FROM employees";
     $stmt = $PDO->query($query);
-    $t = $stmt;
-    // Afficher les résultats de la colonne (à titre d'exemple)
-    print_r($t);
 
-    // Créer un nouveau tableau indicé avec les valeurs de la colonne "salary"
-    $t = [];
-    foreach ($resultats_colonne as $valeur) {
-        $t[] = $valeur;
-    }
+    // Récupérer les résultats dans un tableau associatif
+    $resultats = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $salaires = [];
-    while ($row = $t->fetch(PDO::FETCH_ASSOC)) {
+    while ($row = $resultats->fetch(PDO::FETCH_ASSOC)) {
         $salaires[] = $row['salary'];
     }
     echo '<h1>Voici les salaires récupés SANS traitement :</h1>';
-    for ($i = 0; $i < sizeof($t); $i++) {
-        echo $t[$i] . "<br>";
+    for ($i = 0; $i < sizeof($salaires); $i++) {
+        echo $salaires[$i] . "<br>";
     }
 
+    // Afficher les résultats (à titre d'exemple)
+    print_r($resultats);
 } catch (PDOException $e) {
     echo 'Erreur : ' . $e->getMessage();
 }
