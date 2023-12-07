@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Table</title>
+</head>
+
+<body>
+
+<!-- allow user to select file -->
+<input type="file" id="file-input" />
+
+<!-- button to start reading the file -->
+<button id="read-button">Read File</button>
+
+<!-- file contents will be placed here -->
+<pre id="file-contents"></pre>
+
+
+<script>
+    document.querySelector("#read-button").addEventListener('click', function() {
+        if(document.querySelector("#file-input").files.length == 0) {
+            alert('Error : No file selected');
+            return;
+        }
+
+        // file selected by user
+        let file = document.querySelector("#file-input").files[0];
+        // new FileReader object
+        let reader = new FileReader();
+
+        // event fired when file reading finished
+        reader.addEventListener('load', function() {
+            let text = e.target.result;
+            document.querySelector("#file-contents").textContent = text;
+        });
+
+        // event fired when file reading failed
+        reader.addEventListener('error', function() {
+            alert('Error : Failed to read file');
+        });
+
+        /////
+        ///// Il faut trouver une solution pour lire le fichier 
+        /////
+
+        const text = '[ "Ford", "BMW", "Audi", "Fiat" ]';
+        const myArr = JSON.parse(text); // lecture de la liste
+
+        let table = document.createElement('table');
+
+        myArr.forEach((item, index) => {
+            var row = table.insertRow();
+            var cell = row.insertCell(0);
+            cell.textContent = item;
+        });
+
+    document.body.appendChild(table);
+});
+
+</script>
+
+</body>
+</html>
