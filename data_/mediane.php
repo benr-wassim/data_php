@@ -15,8 +15,7 @@ function mediane($tab){
     else{
         $resultat = ($tab[$n / 2 - 1] + $tab[$n / 2]) / 2;
     }
-
+    return $tab;
     return $resultat;
 }
-moyenne($tab);
 ?>

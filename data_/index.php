@@ -1,23 +1,25 @@
 <?php
-include "config.php"; // Assurez-vous d'avoir le fichier config.php avec les configurations nécessaires
-include "mediane.php"; // Assurez-vous d'avoir le fichier mediane.php avec la définition de la fonction mediane
+// Inclure le fichier config.php
+include "config.php";
+include "mediane.php";
 
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    // Récupérer le tableau JSON depuis les données GET
-    $jsonString = urldecode($_GET['tab']);
+// Vérifier si le tableau $salaires existe
+if (isset($salaires)) {
+    // Afficher les salaires non triés
+    echo '<h1>Voici les salaires non triés :</h1>';
+    foreach ($salaires as $salaire) {
+        echo $salaire . "<br>";
+    }
 
-    // Décoder la chaîne JSON
-    $tab = json_decode($jsonString);
+    // Utiliser la fonction mediane pour trier les salaires
+    $salaires = mediane($salaires);
 
-    // Trier le tableau (exemple de tri croissant)
-    mediane($tab);
-
-    // Renvoyer le tableau trié en tant que réponse JSON
-    header('Content-Type: application/json');
-    echo json_encode($tab);
+    // Afficher les salaires triés
+    echo "<h1>Voici les salaires triés :</h1>";
+    foreach ($salaires as $salaire) {
+        echo $salaire . "<br>";
+    }
 } else {
-    // Gérer les cas où la méthode n'est pas GET
-    http_response_code(405); // Méthode non autorisée
-    echo "Méthode non autorisée";
+    echo "Le tableau des salaires n'est pas disponible.";
 }
 ?>

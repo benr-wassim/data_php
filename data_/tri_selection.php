@@ -14,5 +14,6 @@ function tri_selection($tab){
             $tab[$min] = $temp;
         }
     }
+    return $tab;
 }
 ?>
